@@ -7,9 +7,13 @@ public class MetaTable {
     private Match<String, FieldInfo> idRow;
     private Map<String, FieldInfo> baseRow;
 
-    public String gettableName(){
+    public String getTableName(){
         return tableName;
 
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
     public Match<String, FieldInfo> getIdRow(){
