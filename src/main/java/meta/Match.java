@@ -13,11 +13,11 @@ public class Match<T,R> {
         return new Match<>(one,second);
     }
 
-    public void setOne(T one) {
-        this.one = one;
+    public T getOne() {
+        return one;
     }
 
-    public void setTwo(R two) {
-        this.two = two;
+    public R getTwo() {
+        return two;
     }
 }
