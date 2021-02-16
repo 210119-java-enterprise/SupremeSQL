@@ -1,9 +1,5 @@
 package sql;
 
-import postgresConnect.postgresDataSource;
-
-import java.sql.DatabaseMetaData;
-
 public class SQLTable {
 
     public static boolean isSQLTableExist(String tableName){
