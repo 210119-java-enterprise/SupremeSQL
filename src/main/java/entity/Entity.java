@@ -1,25 +1,36 @@
 package entity;
 
 import annotations.Table;
+import sql.SQLTable;
+
+import java.util.Locale;
 
 public class Entity {
 
     private Class<?> entity;
     private Object entityObj;
 
-    public Entity(Class entity){
-        if (entity.getAnnotation(Table.class) != null){
+    public Entity(Class entity) {
+
+        if (entity.getAnnotation(Table.class) != null) {
             this.entity = entity;
 
-            try{
+            try {
                 this.entityObj = entity.newInstance();
-                //SQL Connect
-            }
-            catch(Exception e){
+                //Create table if it doesnt exist?
+                // if(!SQLTable.isExist(this.getModelAnnotation().name().toLowerCase())){
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-    }
 
+
+//    public Table getModelAnnotation() {
+//        return entity.getAnnotation(Table.class);
+//    }
+    }
 }
+
+
