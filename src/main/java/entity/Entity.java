@@ -27,10 +27,15 @@ public class Entity {
 
 
 
-//    public Table getModelAnnotation() {
+    }
+//        public Table getModelAnnotation() {
 //        return entity.getAnnotation(Table.class);
 //    }
+
+    public String tableName(){
+        return entity.getAnnotation(Table.class).name();
     }
+
 }
 
 
