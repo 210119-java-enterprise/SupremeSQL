@@ -27,7 +27,7 @@ public class PostgresCPool {
         config.setJdbcUrl(app.getValue("postgres.url"));
         config.setUsername(app.getValue("postgres.username"));
         config.setPassword(app.getValue("postgres.password"));
-        config.setMaximumPoolSize(10);
+//        config.setMaximumPoolSize(10);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
