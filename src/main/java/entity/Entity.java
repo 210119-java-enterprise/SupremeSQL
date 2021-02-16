@@ -36,6 +36,18 @@ public class Entity {
         return entity.getAnnotation(Table.class).name();
     }
 
+    public String primaryKey(){
+        return entity.getAnnotation(Table.class).PK();
+    }
+
+    public Class getEntityClass() {
+        return entity;
+    }
+
+    public Object getEntityObject() {
+        return entityObj;
+    }
+
 }
 
 
