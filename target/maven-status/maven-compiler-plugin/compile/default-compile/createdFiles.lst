@@ -2,6 +2,7 @@ ormhandler\ORMHandler.class
 postgresConnect\PostgresConnection.class
 postgresConnect\GetApplication$1.class
 sql\SelectStatement.class
+sql\SQLBuilder.class
 ormhandler\ORMHandlerConcrete.class
 postgresConnect\PostgresCPool.class
 postgresConnect\GetApplication$GetApplicationHolder.class

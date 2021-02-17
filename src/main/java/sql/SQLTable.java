@@ -1,10 +1,15 @@
 package sql;
 
+import entity.Entity;
+import entity.EntityDao;
 import postgresConnect.PostgresConnection;
 
+import java.lang.reflect.Field;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
 
 public class SQLTable {
 
@@ -23,6 +28,7 @@ public class SQLTable {
                     resulthasTableName = true;
                 }
             }
+
             if(resulthasTableName){
                 exist = true;
             }
@@ -34,6 +40,32 @@ public class SQLTable {
 
         return exist;
     }
+
+ //   public static boolean createTableFromEntity(Entity entity) {
+//
+//        boolean exist = false;
+//
+//        if (!isExist(entity.tableName())) {
+//            try (Statement statement = new PostgresConnection(false).getConnection().createStatement()) {
+//                statement.executeUpdate(SQLBuilder.buildCreateTableRequest(entity));
+//
+//
+//
+//                exist = true;
+//
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return exist;
+//    }
+
+    public static int createRecordInTable(Entity entity) {
+
+        return EntityDao.getInstance().createRecordInTable(entity);
+
+    }
+
 
 
 }
