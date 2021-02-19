@@ -8,8 +8,11 @@ postgresConnect\PostgresCPool.class
 postgresConnect\GetApplication$GetApplicationHolder.class
 annotations\Column.class
 entity\Entity.class
+Fields\AttributeField.class
 sql\SQLTable.class
 annotations\PrimaryKey.class
+Fields\PKField.class
 postgresConnect\GetApplication.class
 annotations\Table.class
+annotations\SerialNumber.class
 entity\EntityDao.class

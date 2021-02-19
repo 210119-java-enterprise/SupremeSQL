@@ -60,11 +60,11 @@ public class SQLTable {
 //        return exist;
 //    }
 
-    public static int createRecordInTable(Entity entity) {
-
-        return EntityDao.getInstance().createRecordInTable(entity);
-
-    }
+//    public static int createRecordInTable(Entity entity) {
+//
+//        return EntityDao.getInstance().createRecordInTable(entity);
+//
+//    }
 
 
 
