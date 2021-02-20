@@ -2,16 +2,15 @@ ormhandler\ORMHandler.class
 postgresConnect\PostgresConnection.class
 postgresConnect\GetApplication$1.class
 sql\SelectStatement.class
-sql\SQLBuilder.class
 ormhandler\ORMHandlerConcrete.class
 postgresConnect\PostgresCPool.class
 postgresConnect\GetApplication$GetApplicationHolder.class
 annotations\Column.class
 entity\Entity.class
 Fields\AttributeField.class
-sql\SQLTable.class
 annotations\PrimaryKey.class
 Fields\PKField.class
+util\ObjectMapper.class
 postgresConnect\GetApplication.class
 annotations\Table.class
 annotations\SerialNumber.class

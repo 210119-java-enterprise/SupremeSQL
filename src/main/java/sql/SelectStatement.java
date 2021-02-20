@@ -3,6 +3,9 @@ package sql;
 import annotations.Table;
 import entity.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SelectStatement {
 
     private static final String SELECT_ALL = "SELECT *";
@@ -12,61 +15,56 @@ public class SelectStatement {
     private static final String SEMICOLON = ";";
     private static final String WHERE = " WHERE ";
     private static final String EQUALS = " = ";
+    private static final String SPACE = " ";
+    private static final String EMPTY = "";
     private StringBuilder statement;
-    private String sstatement;
+    private String selectstatement;
 
-    public SelectStatement(Entity<?> model){
-        sstatement = "";
-        selectALL(model);
-    }
-    public SelectStatement(){
-        statement = new StringBuilder();
-    }
 
-    public SelectStatement(String s){
-        statement = new StringBuilder(s);
+    public SelectStatement(Entity<?> entity){
+        selectstatement = EMPTY;
+        selectALL(entity);
     }
-
-    public String submit(){
-        String result = statement.append(SEMICOLON).toString();
-        statement = new StringBuilder();
-        return result;
-    }
-
     public String getSelectStatement(){
-        return sstatement;
+        return selectstatement;
     }
 
     public void selectALL(Entity<?> entity){
         String tableName = entity.tableName();
-        build(tableName);
+        selectBuilder(tableName);
+    }
+    public void selectBuilder(String tablename) {
+        selectstatement = SELECT_ALL + FROM + tablename;
     }
 
-    public SelectStatement from(Entity entity){
-        statement.append(FROM);
-        statement.append(entity.tableName());
-        return this;
-    }
-    public SelectStatement where(String condition) {
-        statement.append(WHERE);
-        statement.append(condition);
-        return this;
+    public void SelectFROM(Entity<?> entity, String... columnNames){
+        selectstatement = EMPTY;
+        selectFrom(entity, columnNames);
     }
 
-    public String equal(Object object) {
-        statement.append(EQUALS);
-        statement.append(object.toString());
-        return this.toString();
+    public SelectStatement(Entity<?> entity, String... names){
+        selectstatement = EMPTY;
+        selectFrom(entity, names);
     }
+    private void selectFrom(Entity<?> entity, String... names){
 
+        String tName = entity.tableName();
+        List<String> columns = new ArrayList<>();
 
-
-    public void build(String tablename) {
-        sstatement = SELECT_ALL + FROM + tablename;
-    }
-
-    private static String lastComma(String string) {
-        return string.toString().trim().substring(0, string.toString().length() - 2);
+        for(String i : names){
+            columns.add(i);
+        }
+        int count = columns.size();
+        StringBuilder select = new StringBuilder(SELECT);
+        for(int i = 0; i < count; i++){
+            if(i == count-1){
+                select.append(columns.get(i)).append(SPACE);
+            }
+            else {
+                select.append(columns.get(i)).append(COMMA);
+            }
+        }
+        selectstatement = select.toString() + FROM + tName;
     }
 
 }

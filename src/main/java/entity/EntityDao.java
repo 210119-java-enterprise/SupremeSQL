@@ -2,9 +2,8 @@ package entity;
 
 import postgresConnect.PostgresConnection;
 import sql.SelectStatement;
+import util.ObjectMapper;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,9 +13,13 @@ public class EntityDao implements AutoCloseable{
 
     private static EntityDao instance;
     Connection conn;
+    ObjectMapper OM;
+    SelectStatement ss;
 
     public EntityDao(){
+
         conn = (new PostgresConnection(false).getConnection());
+        OM = new ObjectMapper();
     }
 
     public static EntityDao getInstance(){
@@ -26,20 +29,37 @@ public class EntityDao implements AutoCloseable{
         return instance;
     }
 
-    public List<?> Select(Entity<?> entity, Object object){
-
-        List<Object> selectlist = new ArrayList<>();
-        SelectStatement selectStatement = new SelectStatement(entity);
-
+    public List<?> SelectALL(Entity<?> entity, Object object){
+        List<Object> selectList = new ArrayList<>();
+        ss = new SelectStatement(entity);
         try{
-            PreparedStatement pstmt = conn.prepareStatement(selectStatement.getSelectStatement());
+            PreparedStatement pstmt = conn.prepareStatement(ss.getSelectStatement());
             ResultSet rs = pstmt.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
-            selectlist= mapping(rs, rsmd, object, entity);
+            selectList= OM.mapping(rs, rsmd, object, entity);
         }catch(SQLException e){
             e.printStackTrace();
         }
-        return selectlist;
+        return selectList;
+    }
+
+    public List<?> SelectFROM(Entity<?> entity, Object object, String... names){
+        List<Object> selectList = new LinkedList<>();
+        ss = new SelectStatement(entity, names);
+        try{
+            PreparedStatement pstmt = conn.prepareStatement(ss.getSelectStatement());
+            ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            selectList = OM.mapping(rs, rsmd, object, entity);
+            conn.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return selectList;
+    }
+
+    public int InsertInto(){
+        return 0;
     }
 
 
@@ -114,47 +134,6 @@ public class EntityDao implements AutoCloseable{
         return exist;
     }
 
-
-    private List<Object> mapping(ResultSet rs, ResultSetMetaData rsmd, Object object, Entity<?> entity) {
-
-        List<Object> objects = new ArrayList<>();
-
-        try {
-            List<String> columns = new ArrayList<>();
-            int count = rsmd.getColumnCount();
-            for(int i = 0; i < count; i++){
-                columns.add(rsmd.getColumnName(i+1));
-            }
-            while(rs.next()){
-                Object newObj = object.getClass().getConstructor().newInstance();
-                for(String i : columns){
-
-                    String name = entity.findField(i);
-                    String methodName = name.substring(0,1).toUpperCase() + name.substring(1);
-                   //System.out.println("Field is " + name);
-
-                    Class<?> type = entity.findAttributes(i);
-                    Object objectValue = rs.getObject(i);
-                    // System.out.println("Type is " + type);
-
-                    Method method = object.getClass().getMethod("set" + methodName, type);
-                    method.invoke(newObj, objectValue);
-                }
-                objects.add(newObj);
-            }
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return objects;
-    }
 
 
     @Override

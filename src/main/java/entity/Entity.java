@@ -20,25 +20,17 @@ public class Entity<T>{
         this.entity = entity;
     }
 
-    public static <T> Entity<T> as(Class<T> entity){
+    public static <T> Entity<T> EntityOf(Class<T> entity){
         if (entity.getAnnotation(Table.class) == null){
             System.out.println("Can't make Entity Object!");
         }
         return new Entity<T>(entity);
     }
 
-//    public String getEntityname(){
-//        return entity.getName();
-//    }
-
-
     public String tableName(){
         return entity.getAnnotation(Table.class).name();
     }
 
-//    public String primaryKey(){
-//        return entity.getAnnotation(Table.class).PK();
-//    }
 
     public List<AttributeField> getAttributes() {
 
@@ -71,27 +63,10 @@ public class Entity<T>{
         }
         return null;
     }
-    public Integer getPrimaryKeyValue() {
-        Integer value = 0;
-        for (Field column : getEntityClass().getDeclaredFields()) {
-            if (column.isAnnotationPresent(PrimaryKey.class)) {
-                try {
-                    column.setAccessible(true);
-                    value = ((Integer) column.get(getEntityObject()));
-                } catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return value;
-    }
-
 
     public Class getEntityClass() {
         return entity;
     }
-
-
 
     public Object getEntityObject() {
         return entityObj;
@@ -119,8 +94,6 @@ public class Entity<T>{
         }
         return null;
     }
-
-
 
     public String getValues() {
         StringBuilder preparedValues = new StringBuilder();
@@ -155,28 +128,6 @@ public class Entity<T>{
         return parsedFields.toString().trim().substring(0, parsedFields.toString().length() - 2);
 
     }
-
-//    public SelectStatement inColumn(String fieldName) {
-//        String columnName = "";
-//        for (Field parsedField : entity.getDeclaredFields()) {
-//            if (parsedField.getName().equals(fieldName)) {
-//                columnName = getAnnotation(parsedField);
-//            } else {
-//                System.out.println("Invalid Column!");
-//            }
-//        }
-//        return new SelectStatement(columnName);
-//    }
-
-//    private String getAnnotation(Field parsedField) {
-//        String cName = "";
-//        if (parsedField.isAnnotationPresent(PrimaryKey.class)) {
-//            cName = this.primaryKey();
-//        } else {
-//            cName = parsedField.getAnnotation(Column.class).column();
-//        }
-//        return cName;
-//    }
 
 }
 
