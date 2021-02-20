@@ -7,5 +7,11 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
+
+/**
+ * Annotation for Primary Key Field to see if its a serial
+ * number or not
+ */
 public @interface SerialNumber {
+
 }

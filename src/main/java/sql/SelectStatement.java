@@ -6,6 +6,10 @@ import entity.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is class is used for Configuring the structure for SELECT
+ * query Statement
+ */
 public class SelectStatement {
 
     private static final String SELECT_ALL = "SELECT *";
@@ -21,34 +25,73 @@ public class SelectStatement {
     private String selectstatement;
 
 
+    /**
+     * Constructor
+     */
     public SelectStatement(){
         super();
     }
+
+    /**
+     * Constructor for Getting all rows and columns
+     * @param entity
+     */
     public SelectStatement(Entity<?> entity){
         selectstatement = EMPTY;
         selectALL(entity);
     }
+
+    /**
+     * Gets the Select Statement
+     * @return
+     */
     public String getSelectStatement(){
         return selectstatement;
     }
 
+    /**
+     * Creates a Select * statement by calling Create Select All
+     * @param entity
+     */
     public void selectALL(Entity<?> entity){
         String tableName = entity.tableName();
-        CreateSelect(tableName);
+        CreateSelectAll(tableName);
     }
-    public void CreateSelect(String tablename) {
+
+    /**
+     * creates Select all statement
+     * @param tablename
+     */
+    public void CreateSelectAll(String tablename) {
         selectstatement = SELECT_ALL + FROM + tablename;
     }
 
-    public void SelectFROM(Entity<?> entity, String... columnNames){
-        selectstatement = EMPTY;
-        selectFrom(entity, columnNames);
-    }
+    /**
+     * Creates a select statements of specified columns by calling Select From
+     * @param entity
+     * @param
+     */
+//    public void SelectFROM(Entity<?> entity, String... columnNames){
+//        selectstatement = EMPTY;
+//        selectFrom(entity, columnNames);
+//    }
 
+
+    /**
+     * Creates a select statements of specified columns by calling Select From
+     * @param entity
+     * @param names
+     */
     public SelectStatement(Entity<?> entity, String... names){
         selectstatement = EMPTY;
         selectFrom(entity, names);
     }
+
+    /**
+     * Creates the select from a specified column query
+     * @param entity
+     * @param names
+     */
     private void selectFrom(Entity<?> entity, String... names){
 
         String tName = entity.tableName();

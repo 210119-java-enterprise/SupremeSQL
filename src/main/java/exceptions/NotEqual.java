@@ -1,5 +1,8 @@
 package exceptions;
 
+/**
+ * Exception for Objects not being equal
+ */
 public class NotEqual extends RuntimeException{
 
    public NotEqual(){

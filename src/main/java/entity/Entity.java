@@ -11,16 +11,31 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This Class is for representing entities of object classes
+ * passed by the user
+ * @param <T>
+ */
 public class Entity<T>{
 
     private Class<T> entity;
-
     Object entityObj;
 
+    /**
+     * Constructor to create an Entity object.
+     * Initializes Entity
+     * @param entity
+     */
     private Entity(Class<T> entity){
         this.entity = entity;
     }
 
+    /**
+     * Takes in a Class and make it an Entity and returns it
+     * @param entity
+     * @param <T>
+     * @return
+     */
     public static <T> Entity<T> EntityOf(Class<T> entity){
         if (entity.getAnnotation(Table.class) == null){
             System.out.println("Can't make Entity Object!");
@@ -28,18 +43,35 @@ public class Entity<T>{
         return new Entity<T>(entity);
     }
 
+    /**
+     * Gets the name of the table
+     * @return the table name of the Entity
+     */
     public String tableName(){
         return entity.getAnnotation(Table.class).name();
     }
 
+    /**
+     * Gets the class of the Entity
+     * @return the class of the Entity
+     */
     public Class getEntityClass() {
         return entity;
     }
 
+    /**
+     * Gets the Object of the Entity
+     * @return the Object of the Entity
+     */
     public Object getEntityObject() {
         return entityObj;
     }
 
+    /**
+     * Finds the field name
+     * @param i
+     * @return the field name
+     */
     public String findField(String i) {
         for(AttributeField field : this.getAttributes()){
             if(field.getName().equals(i)){
@@ -52,6 +84,10 @@ public class Entity<T>{
         return null;
     }
 
+    /**
+     * Gets the Attributes(Columns)
+     * @return the Attributes of class
+     */
     public List<AttributeField> getAttributes() {
 
         List<AttributeField> Fields = new ArrayList<>();
@@ -72,6 +108,11 @@ public class Entity<T>{
         return Fields;
     }
 
+    /**
+     * Finds the class type of an Attribute(Column)
+     * @param name
+     * @return class type
+     */
     public Class<?> findAttributes(String name){
         for(AttributeField field : this.getAttributes()){
             if(field.getAttributeName().equals(name)){
@@ -84,6 +125,10 @@ public class Entity<T>{
         return null;
     }
 
+    /**
+     * Gets the Primary Key of a Class
+     * @return Primary Key of a class
+     */
     private PKField getPrimaryKey() {
         Field[] fields = entity.getDeclaredFields();
         for (Field field : fields) {
@@ -93,40 +138,6 @@ public class Entity<T>{
             }
         }
         return null;
-    }
-
-    public String getValues() {
-        StringBuilder preparedValues = new StringBuilder();
-        for (Field parsedField : entity.getDeclaredFields()) {
-            if (parsedField.isAnnotationPresent(Column.class)) {
-               // final String COLUMN_NAME = parsedField.getAnnotation(Column.class).column();
-                try {
-                    parsedField.setAccessible(true);
-                    Object fieldValue = (Object) parsedField.get(entityObj); /* getting value that we need to push */
-                    preparedValues.append("'" + fieldValue + "'" + ", ");
-                } catch (IllegalArgumentException | IllegalAccessException | ClassCastException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return preparedValues.toString().trim().substring(0, preparedValues.toString().length() - 2);
-    }
-
-    public String getFields() {
-        StringBuilder parsedFields = new StringBuilder();
-
-        for (Field parsedField : entity.getDeclaredFields()) {
-            if (parsedField.isAnnotationPresent(Column.class)) {
-                final String columnName = parsedField.getAnnotation(Column.class).column();
-                try {
-                    parsedFields.append(columnName.toLowerCase() + ", ");
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return parsedFields.toString().trim().substring(0, parsedFields.toString().length() - 2);
-
     }
 
 }

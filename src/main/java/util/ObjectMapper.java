@@ -14,6 +14,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is used for Object mapping and getting values of mapped Objects
+ */
 public class ObjectMapper {
 
     private Object getValue;
@@ -21,9 +24,18 @@ public class ObjectMapper {
     private PrimaryKey PK;
     private SerialNumber num;
 
+    /**
+     * Constructor
+     */
     public ObjectMapper(){
         super();
     }
+
+    /**
+     * Filters the object and takes all values in the object
+     * @param obj
+     * @return an array list of values
+     */
     public ArrayList<String> getMapValues(Object obj){
         Field[] fields = obj.getClass().getDeclaredFields();
         ArrayList<String> values = new ArrayList<>();
@@ -45,6 +57,14 @@ public class ObjectMapper {
         return values;
     }
 
+    /**
+     * Maps database data to a list of objects
+     * @param rs
+     * @param rsmd
+     * @param object
+     * @param entity
+     * @return
+     */
     public List<Object> mapping(ResultSet rs, ResultSetMetaData rsmd, Object object, Entity<?> entity) {
 
         List<Object> objects = new ArrayList<>();

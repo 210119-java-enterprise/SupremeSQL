@@ -7,6 +7,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
+
+/**
+ * Annotation for the Tables for Database Entities
+ */
 public @interface Table {
     String name();
    // String PK();

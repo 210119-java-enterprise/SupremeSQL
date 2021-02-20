@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This class is for talking to the Database with query statements
+ */
 public class EntityDao implements AutoCloseable{
 
     private static EntityDao instance;
@@ -18,6 +21,9 @@ public class EntityDao implements AutoCloseable{
     private ModifyStatements MS;
     private int outcome;
 
+    /**
+     * Constructor to Initializes fields
+     */
     public EntityDao(){
         super();
         conn = (new PostgresConnection(false).getConnection());
@@ -25,6 +31,10 @@ public class EntityDao implements AutoCloseable{
         MS = new ModifyStatements();
     }
 
+    /**
+     * Gets an Instance of this class
+     * @return the Instance of this class
+     */
     public static EntityDao getInstance(){
         if(instance == null){
             instance = new EntityDao();
@@ -32,6 +42,12 @@ public class EntityDao implements AutoCloseable{
         return instance;
     }
 
+    /**
+     * Select * statement to the database
+     * @param entity
+     * @param obj
+     * @return the list of rows of the Entity
+     */
     public List<?> SelectALL(Entity<?> entity, Object obj){
         List<Object> selectList = new ArrayList<>();
         ss = new SelectStatement(entity);
@@ -46,6 +62,13 @@ public class EntityDao implements AutoCloseable{
         return selectList;
     }
 
+    /**
+     * Select only the specified attributes
+     * @param entity
+     * @param obj
+     * @param names
+     * @return a list of the selected statement
+     */
     public List<?> SelectFROM(Entity<?> entity, Object obj, String... names){
         List<Object> selectList = new LinkedList<>();
         ss = new SelectStatement(entity, names);
@@ -60,6 +83,12 @@ public class EntityDao implements AutoCloseable{
         return selectList;
     }
 
+    /**
+     * Insert a row into the DataBase
+     * @param entity
+     * @param obj
+     * @return prepared statements update value
+     */
     public int Insert(Entity<?> entity, Object obj){
         MS.InsertStatement(entity, obj);
         outcome =0;
@@ -76,6 +105,12 @@ public class EntityDao implements AutoCloseable{
         return outcome;
     }
 
+    /**
+     * Deletes a row in the DataBase
+     * @param entity
+     * @param obj
+     * @return prepared statements update value
+     */
     public int Delete(Entity<?> entity, Object obj){
         outcome = 0;
         MS.DeleteStatement(entity, obj);
@@ -92,6 +127,13 @@ public class EntityDao implements AutoCloseable{
         return outcome;
     }
 
+    /**
+     * Updates a row in the DataBase given old and new Classes
+     * @param entity
+     * @param oldobj
+     * @param newobj
+     * @return prepared statements update value
+     */
     public int Update(Entity<?> entity,Object oldobj, Object newobj){
         outcome = 0;
         MS.UpdateStatement(entity, oldobj);
@@ -112,6 +154,10 @@ public class EntityDao implements AutoCloseable{
     }
 
 
+    /**
+     * Closes the connection to the Database
+     * @throws Exception
+     */
     @Override
     public void close() throws Exception {
         try{
