@@ -4,6 +4,7 @@ SupremeSQL is a very basic custom ORM Framework for easy interaction with the Da
 # Setting Up the ORM 
 ### Annotation
 Annotating the Classes the Fields
+
 ![Alt text](src/main/resources/Annotation.PNG "Title")
 
 ### Connection
@@ -23,6 +24,7 @@ To setup the Session and use SQL statements, you need to do the following:
 4)  Create a Session Object and set it equals to the SessionManger object and use its getSession method
 
 It should look similar to the image below 
+
 ![Alt text](src/main/resources/Setup.png "Title")
 
 ### SQL Statements 
@@ -35,4 +37,5 @@ The CRUD methods are:
 5) Update
 
 Example:
-![Alt text](src/main/resources/Insert.png "Title")
+
+![Alt text](src/main/resources/Insert.PNG "Title")
