@@ -1,7 +1,7 @@
 package entity;
 
 import postgresConnect.PostgresConnection;
-import sql.SelectStatement;
+import sql.*;
 import util.ObjectMapper;
 
 import java.sql.*;
@@ -12,14 +12,17 @@ import java.util.List;
 public class EntityDao implements AutoCloseable{
 
     private static EntityDao instance;
-    Connection conn;
-    ObjectMapper OM;
-    SelectStatement ss;
+    private Connection conn;
+    private ObjectMapper OM;
+    private SelectStatement ss;
+    private ModifyStatements MS;
+    private int outcome;
 
     public EntityDao(){
-
+        super();
         conn = (new PostgresConnection(false).getConnection());
         OM = new ObjectMapper();
+        MS = new ModifyStatements();
     }
 
     public static EntityDao getInstance(){
@@ -29,111 +32,84 @@ public class EntityDao implements AutoCloseable{
         return instance;
     }
 
-    public List<?> SelectALL(Entity<?> entity, Object object){
+    public List<?> SelectALL(Entity<?> entity, Object obj){
         List<Object> selectList = new ArrayList<>();
         ss = new SelectStatement(entity);
         try{
             PreparedStatement pstmt = conn.prepareStatement(ss.getSelectStatement());
             ResultSet rs = pstmt.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
-            selectList= OM.mapping(rs, rsmd, object, entity);
+            selectList= OM.mapping(rs, rsmd, obj, entity);
         }catch(SQLException e){
             e.printStackTrace();
         }
         return selectList;
     }
 
-    public List<?> SelectFROM(Entity<?> entity, Object object, String... names){
+    public List<?> SelectFROM(Entity<?> entity, Object obj, String... names){
         List<Object> selectList = new LinkedList<>();
         ss = new SelectStatement(entity, names);
         try{
             PreparedStatement pstmt = conn.prepareStatement(ss.getSelectStatement());
             ResultSet rs = pstmt.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
-            selectList = OM.mapping(rs, rsmd, object, entity);
-            conn.close();
+            selectList = OM.mapping(rs, rsmd, obj, entity);
         }catch(SQLException e){
             e.printStackTrace();
         }
         return selectList;
     }
 
-    public int InsertInto(){
-        return 0;
-    }
-
-
-    public List<Entity> executeRequest(String q, Entity entity) {
-//        String pkname = entity.primaryKey();
-        List<Entity> ListEntity = new ArrayList<>();
-        try {
-            Statement statement = this.conn.createStatement();
-            ResultSet resultSet = statement.executeQuery(q);
-            //ResultSetMetaData rsmd = resultSet.getMetaData();
-
-            while (resultSet.next()) {
-//                Entity e = setFieldsValue(entity, resultSet, pkname);
-//
-//                ListEntity.add(e);
+    public int Insert(Entity<?> entity, Object obj){
+        MS.InsertStatement(entity, obj);
+        outcome =0;
+        ArrayList<String> values = OM.getMapValues(obj);
+        try{
+            PreparedStatement pstmt = conn.prepareStatement(MS.getInsert());
+            for(int i = 0; i < values.size(); i++){
+                pstmt.setObject(i + 1, values.get(i));
             }
-        } catch (SQLException e) {
+            outcome = pstmt.executeUpdate();
+        }catch(SQLException e){
             e.printStackTrace();
         }
-        return ListEntity;
+        return outcome;
     }
 
-
-
-
-
-
-    public int createRecordInTable(Entity entity) {
-        int RecordId = -1;
-        final String tableName = entity.tableName().toLowerCase();
-        final String querry = "INSERT INTO " +
-                                tableName +
-                                " (" +
-                                entity.getFields() +
-                                ")" +
-                                " VALUES (" +
-                                entity.getValues() +
-                                ");";
-        try {
-            PreparedStatement statement = conn.prepareStatement(querry, Statement.RETURN_GENERATED_KEYS);
-            statement.executeUpdate();
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    RecordId = generatedKeys.getInt(1);
-                } else {
-                    throw new IllegalStateException("Can't Return Primary Key");
-                }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public int Delete(Entity<?> entity, Object obj){
+        outcome = 0;
+        MS.DeleteStatement(entity, obj);
+        ArrayList<String> values = OM.getMapValues(obj);
+        try{
+            PreparedStatement pstmt = conn.prepareStatement(MS.getDelete());
+            for(int i = 0; i < values.size();i++){
+                pstmt.setObject(i+1,values.get(i));
+            }
+            outcome = pstmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        return RecordId;
+        return outcome;
     }
 
-    public boolean deleteRecordInTableByPK(Entity entity) {
+    public int Update(Entity<?> entity,Object oldobj, Object newobj){
+        outcome = 0;
+        MS.UpdateStatement(entity, oldobj);
+        ArrayList<String> oldvalues = OM.getMapValues(oldobj);
+        ArrayList<String> newvalues = OM.getMapValues(newobj);
+        try{
+            PreparedStatement pstmt = conn.prepareStatement(MS.getUpdate());
+            for(int i = 0; i < oldvalues.size();i++){
+                pstmt.setObject(i+1, newvalues.get(i));
+                pstmt.setObject(i+1+oldvalues.size(),oldvalues.get(i));
 
-        boolean exist = false;
-        final String QUERY_DELETE_ON_TABLE = "DELETE FROM " +
-                                                entity.tableName() +
-                                                " WHERE " +
-                                                "id" +
-                                                " = " +
-                                                "1";
-        try {
-
-            PreparedStatement statement = conn.prepareStatement(QUERY_DELETE_ON_TABLE);
-            statement.executeUpdate();
-            exist = true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+            }
+            outcome = pstmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        return exist;
+        return outcome;
     }
-
 
 
     @Override

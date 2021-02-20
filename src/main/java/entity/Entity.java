@@ -5,6 +5,7 @@ import annotations.PrimaryKey;
 import annotations.Table;
 import Fields.AttributeField;
 import Fields.PKField;
+import exceptions.NoAttributes;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -31,39 +32,6 @@ public class Entity<T>{
         return entity.getAnnotation(Table.class).name();
     }
 
-
-    public List<AttributeField> getAttributes() {
-
-        List<AttributeField> Fields = new ArrayList<>();
-        Field[] fields = entity.getDeclaredFields();
-        for (Field field : fields) {
-            Column column = field.getAnnotation(Column.class);
-            PrimaryKey primary = field.getAnnotation(PrimaryKey.class);
-            if (column != null) {
-                Fields.add(new AttributeField(field));
-            }
-            else if(primary != null){
-                Fields.add(new AttributeField(field));
-            }
-        }
-        if (Fields.isEmpty()) {
-            throw new RuntimeException("No columns found in: " + entity.getName());
-        }
-        return Fields;
-    }
-
-    public Class<?> findAttributes(String name){
-        for(AttributeField field : this.getAttributes()){
-            if(field.getAttributeName().equals(name)){
-                return field.getType();
-            }
-        }
-        if(getPrimaryKey().getID().equals(name)){
-            return getPrimaryKey().getType();
-        }
-        return null;
-    }
-
     public Class getEntityClass() {
         return entity;
     }
@@ -80,6 +48,38 @@ public class Entity<T>{
         }
         if(getPrimaryKey().getID().equals(i)){
             return getPrimaryKey().getName();
+        }
+        return null;
+    }
+
+    public List<AttributeField> getAttributes() {
+
+        List<AttributeField> Fields = new ArrayList<>();
+        Field[] fields = entity.getDeclaredFields();
+        for (Field field : fields) {
+            Column column = field.getAnnotation(Column.class);
+            PrimaryKey primary = field.getAnnotation(PrimaryKey.class);
+            if (column != null) {
+                Fields.add(new AttributeField(field));
+            }
+            else if(primary != null){
+                Fields.add(new AttributeField(field));
+            }
+        }
+        if (Fields.isEmpty()) {
+            throw new NoAttributes();
+        }
+        return Fields;
+    }
+
+    public Class<?> findAttributes(String name){
+        for(AttributeField field : this.getAttributes()){
+            if(field.getAttributeName().equals(name)){
+                return field.getType();
+            }
+        }
+        if(getPrimaryKey().getID().equals(name)){
+            return getPrimaryKey().getType();
         }
         return null;
     }

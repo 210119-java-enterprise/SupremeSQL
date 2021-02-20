@@ -21,6 +21,9 @@ public class SelectStatement {
     private String selectstatement;
 
 
+    public SelectStatement(){
+        super();
+    }
     public SelectStatement(Entity<?> entity){
         selectstatement = EMPTY;
         selectALL(entity);
@@ -31,9 +34,9 @@ public class SelectStatement {
 
     public void selectALL(Entity<?> entity){
         String tableName = entity.tableName();
-        selectBuilder(tableName);
+        CreateSelect(tableName);
     }
-    public void selectBuilder(String tablename) {
+    public void CreateSelect(String tablename) {
         selectstatement = SELECT_ALL + FROM + tablename;
     }
 
