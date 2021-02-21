@@ -118,7 +118,7 @@ public class ModifyStatements {
                 if (column != null) {
                     columns.add(column.column());
                 }
-                if(PK != null){
+                else if(PK != null){
                     columns.add(PK.name());
                 }
             }
