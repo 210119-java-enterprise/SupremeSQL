@@ -1,5 +1,7 @@
 package entity;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import postgresConnect.PostgresConnection;
 import sql.*;
 import util.ObjectMapper;
@@ -14,6 +16,7 @@ import java.util.List;
  */
 public class EntityDao implements AutoCloseable{
 
+    private static final Logger logger = LogManager.getLogger(EntityDao.class);
     private static EntityDao instance;
     private Connection conn;
     private ObjectMapper OM;
@@ -49,6 +52,7 @@ public class EntityDao implements AutoCloseable{
      * @return the list of rows of the Entity
      */
     public List<?> SelectALL(Entity<?> entity, Object obj){
+        logger.info("Called SelectALL in EntityDao");
         List<Object> selectList = new ArrayList<>();
         ss = new SelectStatement(entity);
         try{
@@ -70,6 +74,7 @@ public class EntityDao implements AutoCloseable{
      * @return a list of the selected statement
      */
     public List<?> SelectFROM(Entity<?> entity, Object obj, String... names){
+        logger.info("Called SelectFROM in EntityDao");
         List<Object> selectList = new LinkedList<>();
         ss = new SelectStatement(entity, names);
         try{
@@ -90,6 +95,7 @@ public class EntityDao implements AutoCloseable{
      * @return prepared statements update value
      */
     public int Insert(Entity<?> entity, Object obj){
+        logger.info("Called Insert in EntityDao");
         MS.InsertStatement(entity, obj);
         outcome =0;
         ArrayList<String> values = OM.getMapValues(obj);
@@ -112,6 +118,7 @@ public class EntityDao implements AutoCloseable{
      * @return prepared statements update value
      */
     public int Delete(Entity<?> entity, Object obj){
+        logger.info("Called Delete in EntityDao");
         outcome = 0;
         MS.DeleteStatement(entity, obj);
         ArrayList<String> values = OM.getMapValues(obj);
@@ -135,6 +142,7 @@ public class EntityDao implements AutoCloseable{
      * @return prepared statements update value
      */
     public int Update(Entity<?> entity,Object oldobj, Object newobj){
+        logger.info("Called Update in EntityDao");
         outcome = 0;
         MS.UpdateStatement(entity, oldobj);
         ArrayList<String> oldvalues = OM.getMapValues(oldobj);
