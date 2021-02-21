@@ -4,6 +4,8 @@ import entity.Entity;
 import entity.EntityDao;
 import exceptions.NoEntityFound;
 import exceptions.NotEqual;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.Iterator;
@@ -15,6 +17,7 @@ import java.util.List;
  */
 public class Session {
 
+    private static final Logger logger = LogManager.getLogger(Session.class);
     Entity<?> entity;
     private EntityDao entityDao;
     private List<Entity<Class<?>>> entityList;
@@ -46,6 +49,7 @@ public class Session {
     public List<?> SelectAll(Object obj){
          Entity<?> entity1 = ifEntity(obj);
         if(entity1 == null){
+            logger.error("No Entity Found");
             throw new NoEntityFound();
         }
         return entityDao.SelectALL(entity1,obj);
@@ -60,6 +64,7 @@ public class Session {
     public List<?> SelectFrom(Object obj,String... columns){
         entity = ifEntity(obj);
         if(entity == null){
+            logger.error("No Entity Found");
             throw new NoEntityFound();
         }
         return entityDao.SelectFROM(entity,obj,columns);
@@ -72,6 +77,7 @@ public class Session {
     public void Insert(Object obj){
         entity = ifEntity(obj);
         if(entity == null){
+            logger.error("No Entity Found");
             throw new NoEntityFound();
         }
         entityDao.Insert(entity,obj);
@@ -85,6 +91,7 @@ public class Session {
     public void Delete(Object obj){
         entity = ifEntity(obj);
         if(entity == null){
+            logger.error("No Entity Found");
             throw new NoEntityFound();
         }
         entityDao.Delete(entity,obj);
@@ -101,6 +108,7 @@ public class Session {
         }
         entity = ifEntity(oldobj);
         if(entity == null){
+            logger.error("No Entity Found");
             throw new NoEntityFound();
         }
         entityDao.Update(entity,oldobj,newobj);

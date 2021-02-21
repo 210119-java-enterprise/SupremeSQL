@@ -4,6 +4,9 @@ import annotations.Column;
 import annotations.PrimaryKey;
 import annotations.SerialNumber;
 import entity.Entity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import session.Session;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -18,6 +21,8 @@ import java.util.List;
  * This class is used for Object mapping and getting values of mapped Objects
  */
 public class ObjectMapper {
+
+    private static final Logger logger = LogManager.getLogger(ObjectMapper.class);
 
     private Object getValue;
     private Column column;
@@ -90,15 +95,15 @@ public class ObjectMapper {
                 objects.add(newObj);
             }
         } catch (InstantiationException e) {
-            e.printStackTrace();
+           logger.error("Failed",e);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            logger.error("Failed",throwables);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         return objects;
     }

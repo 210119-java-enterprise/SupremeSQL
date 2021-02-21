@@ -1,5 +1,8 @@
 package postgresConnect;
 
+import entity.EntityDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.postgresql.ds.PGConnectionPoolDataSource;
 import org.postgresql.ds.PGSimpleDataSource;
 
@@ -13,7 +16,9 @@ import java.sql.SQLException;
  */
 public class PostgresConnection implements AutoCloseable{
 
-   private Connection conn;
+    private static final Logger logger = LogManager.getLogger(PostgresConnection.class);
+
+    private Connection conn;
 
     /**
      * Gets connection to Database
@@ -32,7 +37,7 @@ public class PostgresConnection implements AutoCloseable{
            this.conn = PostgresCPool.getInstance().getConnection();
        }
        catch (SQLException e){
-           e.getStackTrace();
+           logger.error("Failed", e);
        }
    }
 
@@ -61,9 +66,9 @@ public class PostgresConnection implements AutoCloseable{
                app.getValue("postgres.username"), app.getValue("postgres.password"));
 
            } catch (ClassNotFoundException e) {
-               e.printStackTrace();
+               logger.error("Failed", e);
            } catch (SQLException throwables) {
-               throwables.printStackTrace();
+               logger.error("Failed", throwables);
            }
 
        }
@@ -78,7 +83,7 @@ public class PostgresConnection implements AutoCloseable{
         try{
             conn.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed", e);
         }
     }
 }

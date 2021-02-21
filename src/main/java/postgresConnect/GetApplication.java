@@ -1,5 +1,9 @@
 package postgresConnect;
 
+import entity.EntityDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -8,6 +12,8 @@ import java.util.Properties;
  * This class gets the Path of the application.properties
  */
 public class GetApplication {
+
+    private static final Logger logger = LogManager.getLogger(GetApplication.class);
 
     private Properties props = new Properties();
 
@@ -28,7 +34,7 @@ public class GetApplication {
             props.load(new FileInputStream(Path));
         }
         catch(IOException e){
-            e.printStackTrace();
+            logger.error("Failed", e);
         }
 
     }

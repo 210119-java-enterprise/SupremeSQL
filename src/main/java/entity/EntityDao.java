@@ -61,7 +61,7 @@ public class EntityDao implements AutoCloseable{
             ResultSetMetaData rsmd = rs.getMetaData();
             selectList= OM.mapping(rs, rsmd, obj, entity);
         }catch(SQLException e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         return selectList;
     }
@@ -83,7 +83,7 @@ public class EntityDao implements AutoCloseable{
             ResultSetMetaData rsmd = rs.getMetaData();
             selectList = OM.mapping(rs, rsmd, obj, entity);
         }catch(SQLException e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         return selectList;
     }
@@ -106,7 +106,7 @@ public class EntityDao implements AutoCloseable{
             }
             outcome = pstmt.executeUpdate();
         }catch(SQLException e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         return outcome;
     }
@@ -129,7 +129,7 @@ public class EntityDao implements AutoCloseable{
             }
             outcome = pstmt.executeUpdate();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            logger.error("Failed",throwables);
         }
         return outcome;
     }
@@ -156,7 +156,7 @@ public class EntityDao implements AutoCloseable{
             }
             outcome = pstmt.executeUpdate();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            logger.error("Failed",throwables);
         }
         return outcome;
     }
@@ -171,7 +171,7 @@ public class EntityDao implements AutoCloseable{
         try{
             conn.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
     }
 }
