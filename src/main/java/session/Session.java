@@ -103,9 +103,6 @@ public class Session {
      * @param newobj
      */
     public void Update(Object oldobj,Object newobj){
-        if(!oldobj.getClass().getName().equals(newobj.getClass().getName())){
-            throw new NotEqual();
-        }
         entity = ifEntity(oldobj);
         if(entity == null){
             logger.error("No Entity Found");

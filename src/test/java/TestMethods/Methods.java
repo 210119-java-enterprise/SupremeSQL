@@ -76,4 +76,9 @@ public class Methods {
         count = entityDao.Delete(users,user1);
         Assert.assertEquals(1, count);
     }
+
+    @Test
+    public void Test_SelectFromWhere(){
+
+    }
 }

@@ -1,19 +1,27 @@
 # SupremeSQL_p1
-SupremeSQL is a very basic custom ORM Framework for easy interaction with the Database. 
+SupremeSQL is a very basic custom ORM Framework for easy interaction with the Database. This ORM currently only works with Postgres. 
 
 # Setting Up the ORM 
 ### Annotation
-Annotating the Classes the Fields
+Annotating the Classes of the Fields
 
 ![Alt text](src/main/resources/Annotation.PNG "Title")
+
+Also, generate toString , equals, and hashcode methods for each classes
 
 ### Connection
 To connect to the Datebase, you need to create Application.properties file in your src/main/resource folder 
 
 Within the Application.properties file, you need the add the following:
+postgres.driver= org.postgresql.Driver
 postgres.url= the url of the database
 postgres.username= your username
 postgres.password= your password
+
+### Logger 
+To setup the Loggers, you need to add log4j2 dependencies
+
+![Alt text](src/main/resources/LogImage.png "Title")
 
 ### Session
 To setup the Session and use SQL statements, you need to do the following:
@@ -39,3 +47,11 @@ The CRUD methods are:
 Example:
 
 ![Alt text](src/main/resources/Insert.PNG "Title")
+
+### Printing Select 
+This ORM provides a special print method for the Select methods.
+You have to create a PrintSelect object and use its printRow method
+
+To customize the output, you could play around with the toString method in each model classes
+
+[Demo for ORM](https://github.com/ZGCalvin/SupremeSQLUsage)
