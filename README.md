@@ -10,9 +10,9 @@ Annotating the Classes of the Fields
 Also, generate toString , equals, and hashcode methods for each classes
 
 ### Connection
-To connect to the Datebase, you need to create Application.properties file in your src/main/resource folder 
+To connect to the Datebase, you need to create application.properties file in your src/main/resource folder 
 
-Within the Application.properties file, you need the add the following:
+Within the application.properties file, you need to add the following:
 
 postgres.driver= org.postgresql.Driver
 
@@ -28,7 +28,7 @@ To setup the Loggers, you need to add log4j2 dependencies
 ![Alt text](src/main/resources/LogImage.png "Title")
 
 ### Session
-To setup the Session and use SQL statements, you need to do the following:
+To setup the Session and use the SQL methods, you need to do the following:
 
 1) Create a SessionStartup Object
 2) Add classes to SessionStartup Object by using AddClasses method
