@@ -1,6 +1,0 @@
-2021-02-20 19:21:10.674 [main] INFO  entity.EntityDao - Called SelectALL in EntityDao
-2021-02-20 19:22:25.694 [main] INFO  entity.EntityDao - Called SelectALL in EntityDao
-2021-02-20 19:28:33.460 [main] INFO  entity.EntityDao - Called SelectFROM in EntityDao
-2021-02-20 19:31:28.995 [main] INFO  entity.EntityDao - Called Insert in EntityDao
-2021-02-20 19:33:03.270 [main] INFO  entity.EntityDao - Called Update in EntityDao
-2021-02-20 19:33:45.527 [main] INFO  entity.EntityDao - Called Delete in EntityDao
