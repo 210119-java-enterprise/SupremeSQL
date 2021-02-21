@@ -13,9 +13,13 @@ Also, generate toString , equals, and hashcode methods for each classes
 To connect to the Datebase, you need to create Application.properties file in your src/main/resource folder 
 
 Within the Application.properties file, you need the add the following:
+
 postgres.driver= org.postgresql.Driver
+
 postgres.url= the url of the database
+
 postgres.username= your username
+
 postgres.password= your password
 
 ### Logger 
@@ -37,6 +41,7 @@ It should look similar to the image below
 
 ### SQL Statements 
 Using the Session object, you could use the CRUD methods
+
 The CRUD methods are:
 1) SelectAll
 2) SelectFrom
@@ -53,5 +58,8 @@ This ORM provides a special print method for the Select methods.
 You have to create a PrintSelect object and use its printRow method
 
 To customize the output, you could play around with the toString method in each model classes
+
+# Demo
+Below is a Github link to a Demo for the ORM
 
 [Demo for ORM](https://github.com/ZGCalvin/SupremeSQLUsage)
