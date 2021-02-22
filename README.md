@@ -30,10 +30,9 @@ To setup the Loggers, you need to add log4j2 dependencies
 ### Session
 To setup the Session and use the SQL methods, you need to do the following:
 
-1) Create a SessionStartup Object
-2) Add classes to SessionStartup Object by using AddClasses method
-3) Create a SessionManager Object and set it equals to SessionStartup object and used the createSessionManager object
-4)  Create a Session Object and set it equals to the SessionManger object and use its getSession method
+1) Create a SessionManager Object
+2) Add Classes to SessionManager
+3) Create a Session Object and set it equals to the SessionManger object and use its getSession method
 
 It should look similar to the image below 
 

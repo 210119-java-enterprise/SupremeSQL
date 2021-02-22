@@ -6,6 +6,7 @@ import postgresConnect.PostgresCPool;
 import postgresConnect.PostgresConnection;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +18,10 @@ public class SessionManager {
     private List<Entity<Class<?>>> entityList;
     private EntityDao entityDao;
 
+
+    public SessionManager(){
+        entityList = new ArrayList<>();
+    }
     /**
      * Constructor for Initializing the Entity List
      * @param entityList
@@ -32,6 +37,16 @@ public class SessionManager {
     public Session getSession(){
         Session session = new Session(entityList);
         return session;
+    }
+
+    /**
+     * Addes classes into the Entity List
+     * @param c
+     * @return
+     */
+    public SessionManager AddClasses(Class c){
+        entityList.add(Entity.EntityOf(c));
+        return this;
     }
 
     /**

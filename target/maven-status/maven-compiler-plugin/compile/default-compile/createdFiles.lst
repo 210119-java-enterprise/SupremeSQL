@@ -1,4 +1,3 @@
-session\SessionStartup.class
 exceptions\NoAttributes.class
 annotations\Column.class
 Fields\AttributeField.class
