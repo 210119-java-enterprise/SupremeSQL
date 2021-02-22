@@ -3,7 +3,7 @@ SupremeSQL is a very basic custom ORM Framework for easy interaction with the Da
 
 # Setting Up the ORM 
 ### Annotation
-Annotating the Classes of the Fields
+Annotating the Class and its Fields
 
 ![Alt text](src/main/resources/Annotation.PNG "Title")
 
@@ -28,7 +28,7 @@ To setup the Loggers, you need to add log4j2 dependencies
 ![Alt text](src/main/resources/LogImage.png "Title")
 
 ### Session
-To setup the Session and use the SQL methods, you need to do the following:
+To setup a Session and use the SQL methods, you need to do the following:
 
 1) Create a SessionManager Object
 2) Add Classes to SessionManager
@@ -38,7 +38,7 @@ It should look similar to the image below
 
 ![Alt text](src/main/resources/Setup.png "Title")
 
-### SQL Statements 
+### SQL Methods
 Using the Session object, you could use the CRUD methods
 
 The CRUD methods are:
@@ -56,7 +56,7 @@ Example:
 This ORM provides a special print method for the Select methods.
 You have to create a PrintSelect object and use its printRow method
 
-To customize the output, you could play around with the toString method in each model classes
+To further customize the output, you could play around with the toString method in each model classes
 
 # Demo
 Below is a Github link to a Demo for the ORM

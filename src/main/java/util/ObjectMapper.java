@@ -55,7 +55,7 @@ public class ObjectMapper {
                     getValue = field.get(obj);
                     values.add(getValue.toString());
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    logger.error("Failed",e);
                 }
             }
         }
@@ -68,7 +68,7 @@ public class ObjectMapper {
      * @param rsmd
      * @param object
      * @param entity
-     * @return
+     * @return A list of objects
      */
     public List<Object> mapping(ResultSet rs, ResultSetMetaData rsmd, Object object, Entity<?> entity) {
 
