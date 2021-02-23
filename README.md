@@ -1,5 +1,5 @@
 # SupremeSQL_p1
-SupremeSQL is a very basic custom ORM Framework for easy interaction with the Database. This ORM currently only works with Postgres. 
+SupremeSQL is a basic custom ORM Framework for easy interaction with the Database. This ORM connects to the Postgres database with HikariCP as my connection pooling framework. Loggers could be setup to provide informational log messages. SupremeSQL offers a Session-based caching to minimize calls to the database. The SQL methods that Session is able to call are select all, select from specified columns, insert into, update , and delete. 
 
 # Setting Up the ORM 
 ### Annotation

@@ -75,7 +75,7 @@ public class EntityDao implements AutoCloseable{
      */
     public List<?> SelectFROM(Entity<?> entity, Object obj, String... names){
         logger.info("Called SelectFROM in EntityDao");
-        List<Object> selectList = new LinkedList<>();
+        List<Object> selectList = new ArrayList<>();
         ss = new SelectStatement(entity, names);
         try{
             PreparedStatement pstmt = conn.prepareStatement(ss.getSelectStatement());
