@@ -102,3 +102,7 @@ To further customize the output, you could play around with the toString method 
 Below is a Github link to a Demo for the ORM
 
 [Demo for ORM](https://github.com/ZGCalvin/SupremeSQLUsage)
+
+# License 
+
+This project uses the following license: [MIT License](https://github.com/210119-java-enterprise/SupremeSQL_p1/blob/master/LICENSE)
