@@ -42,10 +42,10 @@ Annotating the Class and its Fields
 
 ![Alt text](src/main/resources/Annotation.PNG "Title")
 
-@Table to mark the class as an Entity
-@PrimaryKey to represent the Primary Key within the database
-@Serial to represent a serial value within the database
-@Column to mark the field as a column within the database
+1. @Table to mark the class as an Entity
+2. @PrimaryKey to represent the Primary Key within the database
+3. @Serial to represent a serial value within the database
+4. @Column to mark the field as a column within the database
 
 Also, generate toString , equals, and hashcode methods for each classes
 
