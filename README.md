@@ -36,6 +36,7 @@ To-do list:
 ![Alt text](src/main/resources/supremedepen.png "Title")
 
 
+# Usage
 ## Setting Up the ORM 
 ### Annotation
 Annotating the Class and its Fields
